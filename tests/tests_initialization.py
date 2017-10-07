@@ -12,7 +12,7 @@ class TicketSystemTest(unittest.TestCase):
         self.headers = {'Content-type': 'application/json'}
 
     def test_run_app(self):
-        response = requests.put(self.base_url)
+        response = requests.get(self.base_url)
         self.assertEqual(response.status_code, 404)
 
     def test_read_config(self):
