@@ -24,7 +24,8 @@ def configure_api(app):
     from project.src.api import api, api_bp
     from project.src.api.resources.network import IPv4Address
 
-    api.add_resource(IPv4Address, '/ipv4_address', endpoint='ipv4_address', methods=['GET'])
+    api.prefix = '/api/v1/random'
+    api.add_resource(IPv4Address, '/network/ipv4_address', endpoint='ipv4_address', methods=['GET'])
     app.register_blueprint(api_bp)
 
 
