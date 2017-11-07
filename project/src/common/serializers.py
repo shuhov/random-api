@@ -34,6 +34,9 @@ class Serializer(collections.MutableMapping):
         return key
 
 
-class IPv4Serializer(Serializer):
-    name = fields.String
-    value = fields.String
+class IPv4Serializer:
+    resource_fields = {
+        'name': fields.String,
+        'value': fields.String
+    }
+
