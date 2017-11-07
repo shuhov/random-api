@@ -1,12 +1,12 @@
-import sys
 import logging
+import sys
 from collections import defaultdict
 
 from flask import Flask, g, jsonify
 from werkzeug.contrib.cache import MemcachedCache
 
-import src.common.exceptions as exc
-from src.common.database import get_connection
+import project.src.common.exceptions as exc
+from project.src.common import get_connection
 
 
 # Add configure logging, hook, cli
@@ -21,8 +21,8 @@ def create_app():
 
 def configure_api(app):
 
-    from src.api import api, api_bp
-    from src.api.resources.network.ipv4_address import IPv4Address
+    from project.src import api, api_bp
+    from project.src.api.resources import IPv4Address
 
     api.add_resource(IPv4Address, '/ipv4_address', endpoint='ipv4_address', methods=['GET'])
     app.register_blueprint(api_bp)

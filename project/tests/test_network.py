@@ -1,9 +1,7 @@
 import unittest
-from urllib.parse import urljoin
+from urlparse import urljoin
 
 import requests
-
-from src.app import app
 
 
 class NetworkResourceTest(unittest.TestCase):
@@ -19,3 +17,7 @@ class NetworkResourceTest(unittest.TestCase):
         url = urljoin(self.base_url, 'ipv4_address')
         response = requests.get(url)
         self.assertEqual(response.status_code, 200)
+
+        resource = response.json()
+        print resource
+        self.assertEqual(resource['name'], 'ip_address')

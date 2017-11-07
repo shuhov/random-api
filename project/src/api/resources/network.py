@@ -1,10 +1,9 @@
-from flask import jsonify, make_response
 from flask_restful import Resource, reqparse
-from flask_restful_swagger_2 import swagger
 from flask_restful import marshal
-
-from src.common.serializers import IPv4Serializer
+from flask_restful_swagger_2 import swagger
 from src.models import IPv4
+
+from project.src.common import IPv4Serializer
 
 
 class IPv4Address(Resource):
@@ -39,3 +38,5 @@ class IPv4Address(Resource):
     def get(self):
         return marshal(IPv4(), IPv4Serializer()), 200
         # return make_response(jsonify(data=data), 200)
+
+

@@ -1,6 +1,6 @@
 from flask import g, current_app
 
-from ticket_system.common.pg_connector import Connector
+from project.src.common import Connector
 
 
 def connect_db():
