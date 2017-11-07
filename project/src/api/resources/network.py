@@ -35,7 +35,7 @@ class IPv4Address(Resource):
         self.name = 'ip_address'
 
     def get(self):
-        return marshal(IPv4(), IPv4Serializer()), 200
+        return marshal(IPv4(), IPv4Serializer.resource_fields), 200
         # return make_response(jsonify(data=data), 200)
 
 
