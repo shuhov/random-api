@@ -1,6 +1,6 @@
 from flask import g, current_app
 
-from project.src.common import Connector
+from project.src.common.pg_connector import Connector
 
 
 def connect_db():

@@ -1,5 +1,5 @@
 import os
-from configparser import RawConfigParser
+from ConfigParser import RawConfigParser
 
 SCRIPT_PATH = os.path.dirname(os.path.realpath(__file__))
 CONFIG_FILE = os.path.join(os.path.dirname(SCRIPT_PATH), 'mantira.conf')

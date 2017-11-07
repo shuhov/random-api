@@ -2,7 +2,7 @@ import unittest
 
 import requests
 
-from project.src import app
+from project.src.app import app
 
 
 class TicketSystemTest(unittest.TestCase):

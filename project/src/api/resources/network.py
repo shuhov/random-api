@@ -1,13 +1,12 @@
 from flask_restful import Resource, reqparse
 from flask_restful import marshal
-from flask_restful_swagger_2 import swagger
-from src.models import IPv4
+from project.src.models import IPv4
 
-from project.src.common import IPv4Serializer
+from project.src.common.serializers import IPv4Serializer
 
 
 class IPv4Address(Resource):
-    @swagger.doc({
+    docs = {
         'tags': ['IPv4Address'],
         'description': 'Returns a random IPv4Address',
         'parameters': [
@@ -26,7 +25,7 @@ class IPv4Address(Resource):
                 }
             }
         }
-     })
+     }
     def __init__(self):
         self.reqparse = reqparse.RequestParser()
         self.reqparse.add_argument('mask', type=int, location='json')

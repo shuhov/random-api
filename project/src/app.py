@@ -6,13 +6,13 @@ from flask import Flask, g, jsonify
 from werkzeug.contrib.cache import MemcachedCache
 
 import project.src.common.exceptions as exc
-from project.src.common import get_connection
+from project.src.common.database import get_connection
 
 
 # Add configure logging, hook, cli
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('src.config.BaseConfig')
+    app.config.from_object('project.src.config.BaseConfig')
 
     configure_api(app)
 
@@ -21,8 +21,8 @@ def create_app():
 
 def configure_api(app):
 
-    from project.src import api, api_bp
-    from project.src.api.resources import IPv4Address
+    from project.src.api import api, api_bp
+    from project.src.api.resources.network import IPv4Address
 
     api.add_resource(IPv4Address, '/ipv4_address', endpoint='ipv4_address', methods=['GET'])
     app.register_blueprint(api_bp)
