@@ -1,17 +1,15 @@
 import logging
 import sys
-from collections import defaultdict
 
 from flask import Flask, g, jsonify, redirect
 from src.common.database import get_connection
-from werkzeug.contrib.cache import MemcachedCache
 
 import src.common.exceptions as exc
 
 
 def create_app():
     app = Flask(__name__, static_folder='../static')
-    app.config.from_object('src.config.BaseConfig')
+    app.config.from_object('src.config.DockerConfig')
 
     configure_api(app)
 
@@ -61,20 +59,6 @@ def configure_cli(app):
         with app.open_resource('init_db.sql', mode='r') as f:
             conn.execute(f.read(), commit=True)
         print('Database has been initialized')
-
-
-def configure_cache(app):
-    sql = """select status_id, available_status_id from status_scheme"""
-    with app.app_context():
-        rs = get_connection().execute(sql)
-    status_scheme = defaultdict(list)
-    for status in rs:
-        status_scheme[status['status_id']].append(status['available_status_id'])
-
-    cache = MemcachedCache([app.config['MEMCACHED_SOCKET']])
-    cache.set('status_scheme', status_scheme)
-    return cache
-
 
 app = create_app()
 
