@@ -3,3 +3,4 @@ psycopg2==2.7.3.1
 requests==2.18.4
 Flask==0.12.2
 Flask_RESTful==0.3.6
+uwsgi==2.0.15
