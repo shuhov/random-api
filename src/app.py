@@ -11,7 +11,7 @@ import src.common.exceptions as exc
 
 def create_app():
     app = Flask(__name__, static_folder='../static')
-    app.config.from_object('project.src.config.BaseConfig')
+    app.config.from_object('src.config.BaseConfig')
 
     configure_api(app)
 
@@ -23,13 +23,13 @@ def configure_api(app):
     from src.api import api, api_bp
     from src.api.resources.network import IPv4Address
 
-    api.add_resource(IPv4Address, '/ipv4_address', endpoint='ipv4_address', methods=['GET'])
+    api.add_resource(IPv4Address, '/network/ipv4_address', endpoint='ipv4_address', methods=['GET'])
 
     @app.route('/docs')
     def docs():
         return redirect('/static/docs.html')
 
-    app.register_blueprint(api_bp, url_prefix='/network')
+    app.register_blueprint(api_bp)
 
 
 def configure_logging(app):
