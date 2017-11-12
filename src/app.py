@@ -2,16 +2,15 @@ import logging
 import sys
 from collections import defaultdict
 
-from flask import Flask, g, jsonify
+from flask import Flask, g, jsonify, redirect
+from src.common.database import get_connection
 from werkzeug.contrib.cache import MemcachedCache
 
-import project.src.common.exceptions as exc
-from project.src.common.database import get_connection
+import src.common.exceptions as exc
 
 
-# Add configure logging, hook, cli
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='../static')
     app.config.from_object('project.src.config.BaseConfig')
 
     configure_api(app)
@@ -21,12 +20,16 @@ def create_app():
 
 def configure_api(app):
 
-    from project.src.api import api, api_bp
-    from project.src.api.resources.network import IPv4Address
+    from src.api import api, api_bp
+    from src.api.resources.network import IPv4Address
 
-    api.prefix = '/api/v1/random'
-    api.add_resource(IPv4Address, '/network/ipv4_address', endpoint='ipv4_address', methods=['GET'])
-    app.register_blueprint(api_bp)
+    api.add_resource(IPv4Address, '/ipv4_address', endpoint='ipv4_address', methods=['GET'])
+
+    @app.route('/docs')
+    def docs():
+        return redirect('/static/docs.html')
+
+    app.register_blueprint(api_bp, url_prefix='/network')
 
 
 def configure_logging(app):

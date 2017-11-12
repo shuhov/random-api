@@ -1,9 +1,8 @@
 from flask_restful import Resource, reqparse
 from flask_restful import marshal
+from src.common.fields import IPv4Fields
 
-from project.src.models import IPv4
-from project.src.common.fields import IPv4Fields
-from flask_restful_swagger import swagger
+from src.models import IPv4
 
 
 class IPv4Address(Resource):
