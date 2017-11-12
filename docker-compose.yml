@@ -1,0 +1,23 @@
+web:
+  build: .
+  ports:
+    - "5000:5000"
+  links:
+    - postgres:postgres
+  command: uwsgi --ini random-api.ini
+
+data:
+  restart: always
+  image: postgres:latest
+  volumes:
+    - ./init/init.sql:/docker-entrypoint-initdb.d/init.sql
+    - /var/lib/postgresql
+  command: "true"
+
+postgres:
+  restart: always
+  image: postgres:latest
+  volumes_from:
+    - data
+  ports:
+    - "5431:5432"
