@@ -1,7 +1,7 @@
 web:
   build: .
   ports:
-    - "5000:5000"
+    - "8888:5000"
   links:
     - postgres:postgres
   command: uwsgi --ini random-api.ini
@@ -20,4 +20,4 @@ postgres:
   volumes_from:
     - data
   ports:
-    - "5431:5432"
+    - "5432:5432"
