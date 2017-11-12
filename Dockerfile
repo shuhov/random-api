@@ -1,9 +1,10 @@
+FROM python:2.7.14
 
-# our base image
-FROM python:2.7.14-onbuild
+RUN mkdir -p /usr/src/app
 
-# specify the port number the container should expose
-EXPOSE 5000
+COPY ./src /usr/src/app/src
+COPY ./requirements.txt ./wsgi.py ./random-api.ini /usr/src/app/
 
-# run the application
-CMD ["sh", "./run.sh"]
+WORKDIR /usr/src/app
+
+RUN pip install --no-cache-dir -r requirements.txt
