@@ -1,7 +1,13 @@
-from flask_restful import Api
-from flask import Blueprint
+from flask_restplus import Api
+
+api = Api(
+    prefix='/random',
+    title='Random API',
+    version='1.0',
+)
 
 
-api_bp = Blueprint('api', __name__)
-api = Api(api_bp, prefix='/api/v1/random')
+
+
+
 

@@ -1,46 +1,24 @@
-import logging
-import sys
+from flask import Flask, g, jsonify
 
-from flask import Flask, g, jsonify, redirect
 from src.common.database import get_connection
-
 import src.common.exceptions as exc
 
 
 def create_app():
-    app = Flask(__name__, static_folder='../static')
-    app.config.from_object('src.config.DockerConfig')
-
-    configure_api(app)
-
+    app = Flask(__name__)
+    app.config.from_object('src.config.TestConfig')
     return app
 
 
-def configure_api(app):
+def configure_api():
+    from src.api import api
+    from src.api.resources.network.resource import api as ns_network
+    from src.api.resources.network.resource import IPv4Address
 
-    from src.api import api, api_bp
-    from src.api.resources.network import IPv4Address
+    api.add_namespace(ns_network, '/network')
+    ns_network.add_resource(IPv4Address, '/ipv4_address')
 
-    api.add_resource(IPv4Address, '/network/ipv4_address', endpoint='ipv4_address', methods=['GET'])
-
-    @app.route('/docs')
-    def docs():
-        return redirect('/static/docs.html')
-
-    app.register_blueprint(api_bp)
-
-
-def configure_logging(app):
-    app.logger.setLevel(logging.INFO)
-
-    sh = logging.StreamHandler(stream=sys.stdout)
-    formatter = logging.Formatter(
-        fmt='[%(asctime)s] - %(name)s:%(lineno)s - [%(levelname)s] - : %(message)s',
-        datefmt='%d.%m.%y %H:%M:%S'
-    )
-    sh.setFormatter(formatter)
-    sh.setLevel(logging.DEBUG)
-    app.logger.addHandler(sh)
+    return api
 
 
 def configure_hook(app):
@@ -61,6 +39,8 @@ def configure_cli(app):
         print('Database has been initialized')
 
 app = create_app()
+api = configure_api()
+api.init_app(app)
 
 
 @app.errorhandler(exc.MissingParameters)
@@ -75,5 +55,6 @@ def error_handler(error):
 
 
 if __name__ == '__main__':
+    print app.url_map
     app.run(debug=app.config['DEBUG'])
 
