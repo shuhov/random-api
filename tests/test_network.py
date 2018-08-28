@@ -19,5 +19,5 @@ class NetworkResourceTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
         resource = response.json()
-        print resource
+        print(resource)
         self.assertEqual(resource['name'], 'ip_address')
