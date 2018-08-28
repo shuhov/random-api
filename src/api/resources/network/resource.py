@@ -2,7 +2,7 @@ import random
 import socket
 import struct
 
-from flask import request
+from flask import request, jsonify
 from flask_restplus import Namespace, Resource
 
 from src.common.database import get_connection
@@ -29,5 +29,17 @@ class IPv4Address(Resource):
         }
         conn.execute(sql, bindings, commit=True)
         return {'name': name, 'value': value}
+
+    @api.marshal_with(model)
+    def post(self):
+        name = 'ip_address'
+        value = request.data
+        return {'name': name, 'value': value}
+
+    def put(self):
+        return jsonify({'error': 'put'})
+
+    def patch(self):
+        return jsonify({'error': 'patch'})
 
 
