@@ -2,9 +2,9 @@ class BaseConfig(object):
     DEBUG = False
     DB_NAME = 'postgres'
     DB_USER = 'postgres'
-    DB_PASS = 'postgres'
+    DB_PASS = '111'
     DB_SERVICE = 'localhost'
-    DB_PORT = 5434
+    DB_PORT = 5432
     DB_URI = 'postgresql://{0}:{1}@{2}:{3}/{4}'.format(
             DB_USER, DB_PASS, DB_SERVICE, DB_PORT, DB_NAME
     )

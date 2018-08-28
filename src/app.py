@@ -1,7 +1,7 @@
 from flask import Flask, g, jsonify, Response
 from flask_restplus import Namespace, Resource
 
-from src.common.database import get_connection
+# from src.common.database import get_connection
 import src.common.exceptions as exc
 from src.api import RolesConfig
 
@@ -71,14 +71,14 @@ def configure_hook(app):
             g.pg_conn.close()
 
 
-def configure_cli(app):
-
-    @app.cli.command('initdb')
-    def init_db():
-        conn = get_connection()
-        with app.open_resource('init_db.sql', mode='r') as f:
-            conn.execute(f.read(), commit=True)
-        print('Database has been initialized')
+# def configure_cli(app):
+#
+#     @app.cli.command('initdb')
+#     def init_db():
+#         conn = get_connection()
+#         with app.open_resource('init_db.sql', mode='r') as f:
+#             conn.execute(f.read(), commit=True)
+#         print('Database has been initialized')
 
 app = create_app()
 api = configure_api()
