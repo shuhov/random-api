@@ -22,11 +22,16 @@ def configure_api():
     from src.api import api
     from src.api.resources.network.resource import api as ns_network
     from src.api.resources.network.resource import IPv4Address
-
-    configure_rbac(app, api)
+    from src.api.resources.images.resource import api as img_api
+    from src.api.resources.images.resource import OTPImage
 
     api.add_namespace(ns_network, '/network')
     ns_network.add_resource(IPv4Address, '/ipv4_address')
+
+    api.add_namespace(img_api, '/images')
+    img_api.add_resource(OTPImage, '/otp_list')
+
+    configure_rbac(app, api)
 
     return api
 
@@ -45,7 +50,7 @@ def configure_rbac(app, api):
     rbac.set_user_loader(lambda: anonymous_user)
 
     @app.route('/d')
-    @rbac.deny(roles=['anonymous'], methods=['GET'])
+    @rbac.allow(roles=['anonymous'], methods=['GET'])
     def d():
         return Response('Hello from /d')
 
@@ -60,7 +65,7 @@ def configure_rbac(app, api):
 
     resource = app.view_functions.get('e_e', None)
     role = rbac._role_model.get_by_name('anonymous')
-    rbac.acl.deny(role, 'GET', resource)
+    # rbac.acl.deny(role, 'GET', resource)
 
 
 def configure_hook(app):
