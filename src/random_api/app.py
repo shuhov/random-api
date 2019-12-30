@@ -5,7 +5,6 @@ from random_api.common import exceptions as exc
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object('random_api.config.TestConfig')
     return app
 
 
