@@ -1,10 +1,25 @@
-FROM python:2.7.14
+FROM python:3.7.4
 
-RUN mkdir -p /usr/src/app
+ENV PYTHONUNBUFFERED 1
 
-COPY ./src /usr/src/app/src
-COPY ./requirements.txt ./wsgi.py ./random-api.ini /usr/src/app/
+RUN apt-get update -y \
+    && apt-get install -y \
+    libsasl2-dev \
+    python-dev \
+    libssl-dev \
+    python3-dev \
+    libpcre3-dev
 
-WORKDIR /usr/src/app
+RUN mkdir -p /usr/app/src
+COPY ./src/ /usr/app/src/
+COPY ./requirements.txt /usr/app/src
+WORKDIR /usr/app/src
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+CMD ["uwsgi", "--socket", "0.0.0.0:3000", \
+              "--protocol", "uwsgi", \
+              "--module", "random_api.app", \
+              "--callable", "app", \
+              "--wsgi-disable-file-wrapper"]

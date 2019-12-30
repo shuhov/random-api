@@ -1,6 +1,6 @@
 from flask_restplus import fields
 
-from src.api import api
+from random_api.api import api
 
 
 model = api.model('Model', {
