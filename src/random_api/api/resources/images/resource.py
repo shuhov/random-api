@@ -1,6 +1,6 @@
 import os
 import sys
-from io import StringIO
+from io import BytesIO
 
 import numpy as np
 import pyotp
@@ -15,11 +15,9 @@ class BaseImage(Resource):
     def get(self):
         arr = np.random.randint(0, 255, (100, 100, 3), dtype="uint8")
         image = Image.fromarray(arr, "RGB")
-        image.seek(0)
-
-        output = StringIO()
-        image.save(output, format="PNG")
-        return send_file(output, mimetype="image/png")
+        file_object = BytesIO()
+        image.save(file_object, format="PNG")
+        return send_file(file_object, mimetype="image/PNG")
 
 
 @ns_images.route("otp_list")
@@ -42,6 +40,6 @@ class OTPImage(Resource):
             draw.text((x, y), "{}. {}".format(i, code), (0, 0, 0))
             y += 30
 
-        output = StringIO()
-        image.save(output, format="PNG")
-        return send_file(output, mimetype="image/png")
+        file_object = BytesIO()
+        image.save(file_object, format="PNG")
+        return send_file(file_object, mimetype="image/PNG")
