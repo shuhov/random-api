@@ -1,12 +1,11 @@
-from random_api.common.repository.quotes import request_quote_api, get_random_quote
+from random_api.common.repository.quotes import get_random_quote, request_quote_api
 from random_api.tasks.random_quote import print_random_quote
-
 
 
 def test_request_quote_api():
     response = request_quote_api()
-    assert hasattr(response, 'json')
-    assert [key in response.json() for key in ['content', 'author']]
+    assert hasattr(response, "json")
+    assert [key in response.json() for key in ["content", "author"]]
 
 
 def test_get_random_quote():

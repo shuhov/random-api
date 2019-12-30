@@ -1,12 +1,12 @@
+import logging
+
 import psycopg2
 import psycopg2.extras
-import logging
 
 logger = logging.getLogger(__file__)
 
 
 class Connector:
-
     def __init__(self, db_uri, schema=None):
         self.db_uri = db_uri
         self.schema = schema
@@ -27,7 +27,9 @@ class Connector:
         except psycopg2.ProgrammingError as e:
             logger.exception(e)
         except psycopg2.IntegrityError as e:
-            logger.exception("Exception while executing query: {0}.\nException: {1}".format(query, e))
+            logger.exception(
+                "Exception while executing query: {0}.\nException: {1}".format(query, e)
+            )
         finally:
             cursor.close()
 
@@ -35,4 +37,6 @@ class Connector:
         self.connection.close()
 
     def __str__(self):
-        return '{0}: {1}; schema={2}'.format(self.__class__.__name__, self.db_uri, self.schema)
+        return "{0}: {1}; schema={2}".format(
+            self.__class__.__name__, self.db_uri, self.schema
+        )

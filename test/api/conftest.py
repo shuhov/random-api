@@ -1,5 +1,4 @@
 import pytest
-
 from random_api.app import app
 
 

@@ -1,8 +1,6 @@
 import dramatiq
 from dramatiq.brokers.rabbitmq import RabbitmqBroker
-
-from random_api.common import get_random_quote
-
+from random_api.common.repository.quotes import get_random_quote
 
 rabbitmq_broker = RabbitmqBroker(url="amqp://user:password@172.17.0.2:5672")
 dramatiq.set_broker(rabbitmq_broker)

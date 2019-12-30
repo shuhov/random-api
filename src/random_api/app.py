@@ -1,5 +1,4 @@
 from flask import Flask, g, jsonify
-
 from random_api.common import exceptions as exc
 
 
@@ -15,10 +14,10 @@ def configure_api():
     from random_api.api.resources.images import ns_images
     from random_api.api.resources.images.resource import BaseImage, OTPImage
 
-    api.add_namespace(ns_network, '/network')
+    api.add_namespace(ns_network, "/network")
     ns_network.add_resource(IPv4Address)
 
-    api.add_namespace(ns_images, '/images')
+    api.add_namespace(ns_images, "/images")
     ns_images.add_resource(BaseImage)
     ns_images.add_resource(OTPImage)
 
@@ -26,10 +25,9 @@ def configure_api():
 
 
 def configure_hook(app):
-
     @app.teardown_appcontext
     def close_db(error):
-        if hasattr(g, 'pg_conn'):
+        if hasattr(g, "pg_conn"):
             g.pg_conn.close()
 
 
@@ -49,7 +47,6 @@ def error_handler(error):
     return response
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     print(app.url_map)
-    app.run(debug=app.config['DEBUG'])
-
+    app.run(debug=app.config["DEBUG"])

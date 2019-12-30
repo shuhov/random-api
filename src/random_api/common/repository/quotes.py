@@ -1,9 +1,8 @@
-
 import requests
 
 
 def request_quote_api():
-    url = 'https://api.quotable.io/random'
+    url = "https://api.quotable.io/random"
     return requests.get(url)
 
 

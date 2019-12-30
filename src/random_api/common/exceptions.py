@@ -1,5 +1,4 @@
 class BaseApiException(Exception):
-
     def __init__(self, message=None, status_code=None):
         Exception.__init__(self)
         if message:

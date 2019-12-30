@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 import setuptools
-
 from random_api.project import version
 
 root = Path(__file__).resolve().parents[1]
@@ -22,5 +21,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    python_requires='>=3.7',
+    python_requires=">=3.7",
 )
