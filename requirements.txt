@@ -6,4 +6,4 @@ uwsgi==2.0.15
 requests==2.20.0
 pyotp==2.3.0
 Pillow==6.2.1
-numpy==1.17
+numpy==1.22.0
